@@ -1,39 +1,21 @@
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, Session
-from app.core.config import settings
-import logging
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.orm import sessionmaker
 
-logger = logging.getLogger(__name__)
+DATABASE_URL = "sqlite+aiosqlite:///./recipehub.db"
 
-# Create database engine
-engine = create_engine(
-    settings.DATABASE_URL,
-    connect_args={"check_same_thread": False} if "sqlite" in settings.DATABASE_URL else {}
+engine = create_async_engine(
+    DATABASE_URL,
+    echo=True,       
+    future=True
 )
 
-# Create SessionLocal class
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(
+    bind=engine,
+    class_=AsyncSession,
+    expire_on_commit=False
+)
 
-# Create Base class
-Base = declarative_base()
-
-def get_db() -> Session:
-    """
-    Dependency to get database session
-    """
-    db = SessionLocal()
-    try:
-        yield db
-    except Exception as e:
-        logger.error(f"Database error: {e}")
-        db.rollback()
-        raise
-    finally:
-        db.close()
-
-def create_tables():
-    """
-    Create all tables in the database
-    """
-    Base.metadata.create_all(bind=engine)
+async def get_db():
+  
+    async with SessionLocal() as session:
+        yield session

@@ -1,36 +1,103 @@
 import React, { useState } from 'react';
-import './App.css'; // Assuming you have a CSS file for styling
+import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import GreetUser from './components/GreetUser';
 
-interface AppProps {
-  appName: string;
+interface RecipeFormData {
+  title: string;
+  category: string;
+  ingredients: string[];
+  instructions: string;
+  prepTime: string;
+  difficulty: 'easy' | 'medium' | 'hard';
 }
 
-const App: React.FC<AppProps> = ({ appName }) => {
-  const [count, setCount] = useState<number>(0);
+const SubmitRecipe: React.FC = () => {
+  const [formData, setFormData] = useState<RecipeFormData>({
+    title: '',
+    category: '',
+    ingredients: [''],
+    instructions: '',
+    prepTime: '',
+    difficulty: 'medium'
+  });
 
-  const incrementCount = () => {
-    setCount(prevCount => prevCount + 1);
-  };
+  const categories = [
+    'Italian',
+    'Indian',
+    'Chinese',
+    'Mexican',
+    'American',
+    'Mediterranean',
+    'Japanese',
+    'Thai',
+    'French',
+    'Vegetarian'
+  ];
 
-  const decrementCount = () => {
-    setCount(prevCount => (prevCount > 0 ? prevCount - 1 : 0));
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // TODO: Implement API call to submit recipe
+    console.log('Recipe submitted:', formData);
   };
 
   return (
-    <div className="App">
-      <Header title={appName} />
-      <main>
-        <GreetUser name="Alice" />
-        <p>Current Count: {count}</p>
-        <button onClick={incrementCount}>Increment</button>
-        <button onClick={decrementCount}>Decrement</button>
+    <div className="submit-recipe">
+      <Header title="Submit New Recipe" />
+      <main className="container mx-auto p-4">
+        <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
+          <div className="mb-4">
+            <label className="block mb-2">Recipe Title</label>
+            <input
+              type="text"
+              value={formData.title}
+              onChange={(e) => setFormData({...formData, title: e.target.value})}
+              className="w-full p-2 border rounded"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block mb-2">Category</label>
+            <select
+              value={formData.category}
+              onChange={(e) => setFormData({...formData, category: e.target.value})}
+              className="w-full p-2 border rounded"
+              required
+            >
+              <option value="">Select a category</option>
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="mb-4">
+            <label className="block mb-2">Difficulty</label>
+            <select
+              value={formData.difficulty}
+              onChange={(e) => setFormData({...formData, difficulty: e.target.value as RecipeFormData['difficulty']})}
+              className="w-full p-2 border rounded"
+            >
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+
+          <button 
+            type="submit"
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          >
+            Submit Recipe
+          </button>
+        </form>
       </main>
       <Footer year={new Date().getFullYear()} />
     </div>
   );
 };
 
-export default App;
+export default SubmitRecipe;

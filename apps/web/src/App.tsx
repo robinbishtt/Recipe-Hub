@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './App.css'; // Assuming you have a CSS file for styling
+import React, { useState, useEffect } from 'react';
+import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import GreetUser from './components/GreetUser';
@@ -13,12 +13,9 @@ const App: React.FC<AppProps> = ({ appName }) => {
   const [count, setCount] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<string>('home');
 
-  const incrementCount = () => {
-    setCount(prevCount => prevCount + 1);
-  };
 
-  const decrementCount = () => {
-    setCount(prevCount => (prevCount > 0 ? prevCount - 1 : 0));
+  const searchRecipes = async () => {
+    
   };
 
   const renderCurrentPage = () => {

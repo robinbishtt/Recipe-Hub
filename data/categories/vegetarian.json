@@ -61,6 +61,29 @@
         "1 tsp chili powder"
       ],
       "tags": ["vegetarian", "Mexican", "tacos", "protein"]
+    },
+    {
+      "id": "v004",
+      "title": "Creamy Mushroom Pasta",
+      "prep_time": 10,
+      "cook_time": 20,
+      "difficulty": "Easy",
+      "servings": 4,
+      "ingredients": [
+        "400g fettuccine pasta",
+        "300g mixed mushrooms (cremini, shiitake, button)",
+        "3 cloves garlic, minced",
+        "1 medium onion, finely chopped",
+        "1 cup heavy cream",
+        "1/2 cup vegetable broth",
+        "1/2 cup grated Parmesan cheese",
+        "3 tbsp butter",
+        "2 tbsp olive oil",
+        "2 tbsp fresh thyme leaves",
+        "Salt and black pepper to taste",
+        "Fresh parsley for garnish"
+      ],
+      "tags": ["vegetarian", "Italian", "pasta", "comfort", "creamy"]
     }
   ]
 }
